@@ -19,11 +19,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <script>
+        // Set theme on page load
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc; /* slate-50 */
             color: #334155; /* slate-700 */
+        }
+        .dark body {
+            background-color: #0f172a; /* slate-900 */
+            color: #cbd5e1; /* slate-300 */
         }
         .chart-container {
             position: relative;
@@ -45,6 +58,9 @@
         .nav-link:hover {
             color: #0ea5e9; /* sky-500 */
         }
+        .dark .nav-link:hover {
+            color: #38bdf8; /* sky-400 */
+        }
         .card-hover {
             transition: transform 0.3s, box-shadow 0.3s;
         }
@@ -60,59 +76,63 @@
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased transition-colors duration-500">
 
     <!-- Floating Social Media Bar -->
     <aside class="hidden md:block fixed top-1/2 -translate-y-1/2 left-0 z-40">
-        <div class="bg-white p-3 rounded-r-lg shadow-lg border border-slate-200">
-            <div class="flex flex-col gap-5">
-                <a href="https://amirfian-v1.github.io/" target="_blank" rel="noopener noreferrer" class="social-icon text-slate-600 hover:text-slate-900" title="GitHub">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-r-lg shadow-lg border border-slate-200 dark:border-slate-700">
+            <div class="flex flex-col gap-6">
+                <a href="https://amirfian-v1.github.io/" target="_blank" rel="noopener noreferrer" class="social-icon text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white" title="GitHub">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
                 </a>
-                <a href="https://www.facebook.com/amirfian.SevenGuardians/" target="_blank" rel="noopener noreferrer" class="social-icon text-slate-600 hover:text-blue-600" title="Facebook">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                <a href="https://www.facebook.com/amirfian.SevenGuardians/" target="_blank" rel="noopener noreferrer" class="social-icon text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-500" title="Facebook">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
                 </a>
-                <a href="https://instagram.com/amirfian3d" target="_blank" rel="noopener noreferrer" class="social-icon text-slate-600 hover:text-pink-600" title="Instagram">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.013-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.08 2.525c.636-.247 1.363-.416 2.427-.465C9.53 2.013 9.884 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0-2a7 7 0 110 14 7 7 0 010-14zm6.406-1.18a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" clip-rule="evenodd" /></svg>
+                <a href="https://instagram.com/amirfian3d" target="_blank" rel="noopener noreferrer" class="social-icon text-slate-600 dark:text-slate-400 hover:text-pink-600 dark:hover:text-pink-500" title="Instagram">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.013-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.08 2.525c.636-.247 1.363-.416 2.427-.465C9.53 2.013 9.884 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0-2a7 7 0 110 14 7 7 0 010-14zm6.406-1.18a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" clip-rule="evenodd" /></svg>
                 </a>
-                <a href="https://www.linkedin.com/in/amirfian/" target="_blank" rel="noopener noreferrer" class="social-icon text-slate-600 hover:text-blue-700" title="LinkedIn">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <a href="https://www.linkedin.com/in/amirfian/" target="_blank" rel="noopener noreferrer" class="social-icon text-slate-600 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-500" title="LinkedIn">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
             </div>
         </div>
     </aside>
 
     <!-- Header & Navigasi -->
-    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm dark:shadow-slate-800">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold text-slate-800">Amir Ibnu Alfian</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#tentang" class="nav-link text-slate-600">Tentang</a>
-                <a href="#keahlian" class="nav-link text-slate-600">Keahlian</a>
-                <a href="#proyek" class="nav-link text-slate-600">Proyek</a>
-                <a href="#kontak" class="nav-link text-slate-600">Kontak</a>
+            <a href="#" class="text-xl font-bold text-slate-800 dark:text-white">Amir Ibnu Alfian</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#tentang" class="nav-link text-slate-600 dark:text-slate-300">Tentang</a>
+                <a href="#keahlian" class="nav-link text-slate-600 dark:text-slate-300">Keahlian</a>
+                <a href="#proyek" class="nav-link text-slate-600 dark:text-slate-300">Proyek</a>
+                <a href="#kontak" class="nav-link text-slate-600 dark:text-slate-300">Kontak</a>
+                <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none rounded-lg text-sm p-2.5">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 7.072l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 001.414 1.414zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-slate-800">
+            <button id="mobile-menu-button" class="md:hidden text-slate-800 dark:text-slate-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#tentang" class="block py-2 nav-link text-slate-600">Tentang</a>
-            <a href="#keahlian" class="block py-2 nav-link text-slate-600">Keahlian</a>
-            <a href="#proyek" class="block py-2 nav-link text-slate-600">Proyek</a>
-            <a href="#kontak" class="block py-2 nav-link text-slate-600">Kontak</a>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 bg-white dark:bg-slate-900">
+            <a href="#tentang" class="block py-2 nav-link text-slate-600 dark:text-slate-300">Tentang</a>
+            <a href="#keahlian" class="block py-2 nav-link text-slate-600 dark:text-slate-300">Keahlian</a>
+            <a href="#proyek" class="block py-2 nav-link text-slate-600 dark:text-slate-300">Proyek</a>
+            <a href="#kontak" class="block py-2 nav-link text-slate-600 dark:text-slate-300">Kontak</a>
         </div>
     </header>
 
     <main>
         <!-- Section 1: Hero -->
-        <section id="hero" class="min-h-screen flex items-center bg-white">
+        <section id="hero" class="min-h-screen flex items-center bg-white dark:bg-slate-900">
             <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-4">Halo, saya Amir Ibnu Alfian, S.Kom</h1>
-                <p class="text-lg md:text-xl text-sky-600 mb-8">Saya seorang Pengelola Sistem Informasi yang bersemangat dalam menciptakan solusi digital yang inovatif dan bermanfaat.</p>
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-800 dark:text-white mb-4">Halo, saya Amir Ibnu Alfian, S.Kom</h1>
+                <p class="text-lg md:text-xl text-sky-600 dark:text-sky-400 mb-8">Saya seorang Pengelola Sistem Informasi yang bersemangat dalam menciptakan solusi digital yang inovatif dan bermanfaat.</p>
                 <a href="#proyek" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-full hover:bg-sky-600 transition duration-300">Lihat Karya Saya</a>
             </div>
         </section>
@@ -120,9 +140,9 @@
         <!-- Section 2: Tentang Saya -->
         <section id="tentang" class="py-20">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Tentang Saya</h2>
-                <p class="text-center text-slate-500 mb-12">Pengenalan singkat tentang perjalanan dan motivasi saya.</p>
-                <div class="max-w-3xl mx-auto text-center text-slate-600 leading-relaxed">
+                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800 dark:text-white">Tentang Saya</h2>
+                <p class="text-center text-slate-500 dark:text-slate-400 mb-12">Pengenalan singkat tentang perjalanan dan motivasi saya.</p>
+                <div class="max-w-3xl mx-auto text-center text-slate-600 dark:text-slate-300 leading-relaxed">
                     <p>
                         Selamat datang di portofolio saya! Saya adalah seorang pengembang perangkat lunak dengan hasrat untuk memecahkan masalah melalui kode. Saya percaya bahwa teknologi dapat menjadi kekuatan pendorong untuk perubahan positif, dan saya berdedikasi untuk membangun aplikasi yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang luar biasa. Bagian ini menjelaskan latar belakang, minat, dan tujuan karir saya dalam industri teknologi.
                     </p>
@@ -131,22 +151,22 @@
         </section>
 
         <!-- Section 3: Keahlian -->
-        <section id="keahlian" class="py-20 bg-white">
+        <section id="keahlian" class="py-20 bg-white dark:bg-slate-900">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Keahlian Utama</h2>
-                <p class="text-center text-slate-500 mb-12">Visualisasi ini menunjukkan tingkat kemahiran saya di berbagai bidang pengembangan. Arahkan kursor ke titik untuk melihat detail.</p>
+                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800 dark:text-white">Keahlian Utama</h2>
+                <p class="text-center text-slate-500 dark:text-slate-400 mb-12">Visualisasi ini menunjukkan tingkat kemahiran saya di berbagai bidang pengembangan. Arahkan kursor ke titik untuk melihat detail.</p>
                 <div class="chart-container">
                     <canvas id="skillsChart"></canvas>
                 </div>
                 <div class="mt-16 text-center">
-                    <p class="text-slate-600">Beberapa teknologi yang saya gunakan:</p>
+                    <p class="text-slate-600 dark:text-slate-300">Beberapa teknologi yang saya gunakan:</p>
                     <div class="flex justify-center items-center flex-wrap gap-4 mt-4">
-                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">JavaScript (ES6+)</span>
-                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">React</span>
-                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">Node.js</span>
-                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">Python</span>
-                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">Tailwind CSS</span>
-                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">Figma</span>
+                        <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium px-4 py-2 rounded-full">JavaScript (ES6+)</span>
+                        <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium px-4 py-2 rounded-full">React</span>
+                        <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium px-4 py-2 rounded-full">Node.js</span>
+                        <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium px-4 py-2 rounded-full">Python</span>
+                        <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium px-4 py-2 rounded-full">Tailwind CSS</span>
+                        <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium px-4 py-2 rounded-full">Figma</span>
                     </div>
                 </div>
             </div>
@@ -155,34 +175,34 @@
         <!-- Section 4: Proyek -->
         <section id="proyek" class="py-20">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Proyek Pilihan</h2>
-                <p class="text-center text-slate-500 mb-12">Berikut adalah beberapa proyek yang telah saya kerjakan. Setiap kartu mewakili sebuah tantangan yang berhasil saya selesaikan.</p>
+                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800 dark:text-white">Proyek Pilihan</h2>
+                <p class="text-center text-slate-500 dark:text-slate-400 mb-12">Berikut adalah beberapa proyek yang telah saya kerjakan. Setiap kartu mewakili sebuah tantangan yang berhasil saya selesaikan.</p>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Project Card 1 -->
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md dark:shadow-slate-700 overflow-hidden card-hover">
                         <img src="https://placehold.co/600x400/e2e8f0/334155?text=Proyek+Satu" alt="Placeholder Proyek 1" class="w-full h-48 object-cover">
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-slate-800">Nama Proyek Satu</h3>
-                            <p class="text-slate-600 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
-                            <a href="#" class="text-sky-500 font-semibold hover:text-sky-600">Lihat di GitHub &rarr;</a>
+                            <h3 class="text-xl font-bold mb-2 text-slate-800 dark:text-white">Nama Proyek Satu</h3>
+                            <p class="text-slate-600 dark:text-slate-300 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
+                            <a href="#" class="text-sky-500 dark:text-sky-400 font-semibold hover:text-sky-600 dark:hover:text-sky-300">Lihat di GitHub &rarr;</a>
                         </div>
                     </div>
                     <!-- Project Card 2 -->
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md dark:shadow-slate-700 overflow-hidden card-hover">
                         <img src="https://placehold.co/600x400/e2e8f0/334155?text=Proyek+Dua" alt="Placeholder Proyek 2" class="w-full h-48 object-cover">
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-slate-800">Nama Proyek Dua</h3>
-                            <p class="text-slate-600 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
-                            <a href="#" class="text-sky-500 font-semibold hover:text-sky-600">Lihat di GitHub &rarr;</a>
+                            <h3 class="text-xl font-bold mb-2 text-slate-800 dark:text-white">Nama Proyek Dua</h3>
+                            <p class="text-slate-600 dark:text-slate-300 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
+                            <a href="#" class="text-sky-500 dark:text-sky-400 font-semibold hover:text-sky-600 dark:hover:text-sky-300">Lihat di GitHub &rarr;</a>
                         </div>
                     </div>
                     <!-- Project Card 3 -->
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md dark:shadow-slate-700 overflow-hidden card-hover">
                         <img src="https://placehold.co/600x400/e2e8f0/334155?text=Proyek+Tiga" alt="Placeholder Proyek 3" class="w-full h-48 object-cover">
                         <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-slate-800">Nama Proyek Tiga</h3>
-                            <p class="text-slate-600 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
-                            <a href="#" class="text-sky-500 font-semibold hover:text-sky-600">Lihat di GitHub &rarr;</a>
+                            <h3 class="text-xl font-bold mb-2 text-slate-800 dark:text-white">Nama Proyek Tiga</h3>
+                            <p class="text-slate-600 dark:text-slate-300 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
+                            <a href="#" class="text-sky-500 dark:text-sky-400 font-semibold hover:text-sky-600 dark:hover:text-sky-300">Lihat di GitHub &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -190,10 +210,10 @@
         </section>
 
         <!-- Section 5: Kontak -->
-        <section id="kontak" class="py-20 bg-slate-800 text-white">
+        <section id="kontak" class="py-20 bg-slate-800 dark:bg-black">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl font-bold mb-4">Tertarik untuk Berkolaborasi?</h2>
-                <p class="max-w-2xl mx-auto mb-8 text-slate-300">Saya selalu terbuka untuk diskusi, peluang baru, atau sekadar menyapa. Jangan ragu untuk menghubungi saya.</p>
+                <h2 class="text-3xl font-bold mb-4 text-white">Tertarik untuk Berkolaborasi?</h2>
+                <p class="max-w-2xl mx-auto mb-8 text-slate-300 dark:text-slate-400">Saya selalu terbuka untuk diskusi, peluang baru, atau sekadar menyapa. Jangan ragu untuk menghubungi saya.</p>
                 <a href="mailto:amir.ibnu@staf.unair.ac.id" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-full hover:bg-sky-600 transition duration-300">Hubungi Saya</a>
                 <div class="flex justify-center gap-6 mt-12">
                      <a href="https://amirfian-v1.github.io/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition">GitHub</a>
@@ -205,7 +225,7 @@
         </section>
     </main>
 
-    <footer class="bg-slate-900 text-slate-400 text-center py-6">
+    <footer class="bg-slate-900 dark:bg-black border-t border-slate-800 text-slate-400 text-center py-6">
         <p>&copy; 2025 Amir Ibnu Alfian. Dibuat dengan semangat dan secangkir kopi.</p>
     </footer>
 
@@ -218,84 +238,116 @@
                 mobileMenu.classList.toggle('hidden');
             });
 
+            // Dark/Light Mode Toggle
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+            // Change the icons inside the button based on previous settings
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                // toggle icons inside button
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                // if set via local storage previously
+                if (localStorage.getItem('color-theme')) {
+                    if (localStorage.getItem('color-theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                    }
+
+                // if NOT set via local storage previously
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                    }
+                }
+                
+                // Rerender chart on theme change
+                skillsChart.destroy();
+                skillsChart = new Chart(ctx, getChartConfig());
+            });
+
+
             // Chart.js Radar Chart
             const ctx = document.getElementById('skillsChart').getContext('2d');
             
-            // Data untuk chart. Ganti label dan data sesuai keahlian Anda (skala 1-10)
-            const skillsData = {
-                labels: [
-                    'Frontend Dev',
-                    'Backend Dev',
-                    'UI/UX Design',
-                    'Database',
-                    'DevOps',
-                    'Problem Solving'
-                ],
-                datasets: [{
-                    label: 'Tingkat Keahlian',
-                    data: [9, 7, 8, 7, 6, 9], // Ganti dengan data Anda
-                    fill: true,
-                    backgroundColor: 'rgba(14, 165, 233, 0.2)', // sky-500 with opacity
-                    borderColor: 'rgb(14, 165, 233)', // sky-500
-                    pointBackgroundColor: 'rgb(14, 165, 233)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(14, 165, 233)'
-                }]
-            };
+            const getChartConfig = () => {
+                const isDarkMode = document.documentElement.classList.contains('dark');
+                const gridColor = isDarkMode ? 'rgba(100, 116, 139, 0.3)' : 'rgba(51, 65, 85, 0.2)';
+                const pointLabelColor = isDarkMode ? '#e2e8f0' : '#334155';
+                const ticksColor = isDarkMode ? '#94a3b8' : '#475569';
+                const ticksBackdropColor = isDarkMode ? 'rgba(15, 23, 42, 0.75)' : 'rgba(255, 255, 255, 0.75)';
 
-            const config = {
-                type: 'radar',
-                data: skillsData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: {
-                                color: 'rgba(51, 65, 85, 0.2)' // slate-700 with opacity
-                            },
-                            grid: {
-                                color: 'rgba(51, 65, 85, 0.2)'
-                            },
-                            pointLabels: {
-                                font: {
-                                    size: 14
-                                },
-                                color: '#334155' // slate-700
-                            },
-                            ticks: {
-                                backdropColor: 'rgba(255, 255, 255, 0.75)',
-                                color: '#475569', // slate-600
-                                stepSize: 2
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 10
-                        }
+                return {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            'Frontend Dev', 'Backend Dev', 'UI/UX Design',
+                            'Database', 'DevOps', 'Problem Solving'
+                        ],
+                        datasets: [{
+                            label: 'Tingkat Keahlian',
+                            data: [9, 7, 8, 7, 6, 9],
+                            fill: true,
+                            backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                            borderColor: 'rgb(14, 165, 233)',
+                            pointBackgroundColor: 'rgb(14, 165, 233)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(14, 165, 233)'
+                        }]
                     },
-                    plugins: {
-                        legend: {
-                            display: false
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: gridColor },
+                                grid: { color: gridColor },
+                                pointLabels: { font: { size: 14 }, color: pointLabelColor },
+                                ticks: {
+                                    backdropColor: ticksBackdropColor,
+                                    color: ticksColor,
+                                    stepSize: 2
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 10
+                            }
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.r !== null) {
+                                            label += context.parsed.r + ' / 10';
+                                        }
+                                        return label;
                                     }
-                                    if (context.parsed.r !== null) {
-                                        label += context.parsed.r + ' / 10';
-                                    }
-                                    return label;
                                 }
                             }
                         }
                     }
-                }
+                };
             };
             
-            new Chart(ctx, config);
+            let skillsChart = new Chart(ctx, getChartConfig());
 
             // Smooth scroll for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
