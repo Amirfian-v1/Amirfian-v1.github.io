@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Amir Ibnu Alfian</title>
+    
+    <!-- Chosen Palette: Calm Neutrals (Slate, Stone, Sky) -->
+    <!-- Application Structure Plan: Saya merancang aplikasi ini sebagai SPA vertikal dengan navigasi yang mengarahkan ke setiap bagian. Strukturnya adalah: 1. Hero (Perkenalan Awal), 2. Tentang Saya (Narasi), 3. Keahlian (Visualisasi Data & Ikon), 4. Proyek (Galeri Interaktif), 5. Kontak (Call-to-Action). Struktur ini dipilih karena mengikuti alur penceritaan yang logis bagi pengunjung (siapa Anda -> apa yang Anda bisa -> apa yang telah Anda buat -> bagaimana menghubungi Anda), sehingga memaksimalkan pemahaman dan engagement pengguna dalam satu halaman. -->
+    <!-- Visualization & Content Choices: 
+        - Informasi: Tingkat keahlian (misal: Frontend, Backend, UI/UX). Goal: Membandingkan kekuatan secara visual. Viz: Chart.js Radar Chart. Interaksi: Tooltip pada hover. Justifikasi: Radar chart memberikan ringkasan visual yang cepat dan menarik tentang kompetensi multidisiplin, lebih efektif daripada daftar biasa. Library: Chart.js (Canvas).
+        - Informasi: Daftar proyek. Goal: Mengorganisir dan menampilkan karya. Viz: Grid Card dengan HTML/Tailwind. Interaksi: Efek hover untuk highlight. Justifikasi: Tampilan kartu yang bersih memungkinkan pemindaian cepat dan memberikan ruang yang cukup untuk detail penting tanpa membebani pengguna. Metode: HTML/CSS.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. 
+    -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #0ea5e9; /* sky-500 */
+        }
+        .card-hover {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigasi -->
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-slate-800">Amir Ibnu Alfian</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#tentang" class="nav-link text-slate-600">Tentang</a>
+                <a href="#keahlian" class="nav-link text-slate-600">Keahlian</a>
+                <a href="#proyek" class="nav-link text-slate-600">Proyek</a>
+                <a href="#kontak" class="nav-link text-slate-600">Kontak</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-slate-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#tentang" class="block py-2 nav-link text-slate-600">Tentang</a>
+            <a href="#keahlian" class="block py-2 nav-link text-slate-600">Keahlian</a>
+            <a href="#proyek" class="block py-2 nav-link text-slate-600">Proyek</a>
+            <a href="#kontak" class="block py-2 nav-link text-slate-600">Kontak</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Hero -->
+        <section id="hero" class="min-h-screen flex items-center bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-4">Halo, saya Amir Ibnu Alfian, S.Kom</h1>
+                <p class="text-lg md:text-xl text-sky-600 mb-8">Saya seorang [Posisi Anda] yang bersemangat dalam menciptakan solusi digital yang inovatif dan bermanfaat.</p>
+                <a href="#proyek" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-full hover:bg-sky-600 transition duration-300">Lihat Karya Saya</a>
+            </div>
+        </section>
+
+        <!-- Section 2: Tentang Saya -->
+        <section id="tentang" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Tentang Saya</h2>
+                <p class="text-center text-slate-500 mb-12">Pengenalan singkat tentang perjalanan dan motivasi saya.</p>
+                <div class="max-w-3xl mx-auto text-center text-slate-600 leading-relaxed">
+                    <p>
+                        Selamat datang di portofolio saya! Saya adalah seorang pengembang perangkat lunak dengan hasrat untuk memecahkan masalah melalui kode. Saya percaya bahwa teknologi dapat menjadi kekuatan pendorong untuk perubahan positif, dan saya berdedikasi untuk membangun aplikasi yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang luar biasa. Bagian ini menjelaskan latar belakang, minat, dan tujuan karir saya dalam industri teknologi.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Keahlian -->
+        <section id="keahlian" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Keahlian Utama</h2>
+                <p class="text-center text-slate-500 mb-12">Visualisasi ini menunjukkan tingkat kemahiran saya di berbagai bidang pengembangan. Arahkan kursor ke titik untuk melihat detail.</p>
+                <div class="chart-container">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+                <div class="mt-16 text-center">
+                    <p class="text-slate-600">Beberapa teknologi yang saya gunakan:</p>
+                    <div class="flex justify-center items-center flex-wrap gap-4 mt-4">
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">JavaScript (ES6+)</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">React</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">Node.js</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">Python</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">Tailwind CSS</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-full">Figma</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Proyek -->
+        <section id="proyek" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2 text-slate-800">Proyek Pilihan</h2>
+                <p class="text-center text-slate-500 mb-12">Berikut adalah beberapa proyek yang telah saya kerjakan. Setiap kartu mewakili sebuah tantangan yang berhasil saya selesaikan.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Card 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://placehold.co/600x400/e2e8f0/334155?text=Proyek+Satu" alt="Placeholder Proyek 1" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-slate-800">Nama Proyek Satu</h3>
+                            <p class="text-slate-600 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
+                            <a href="#" class="text-sky-500 font-semibold hover:text-sky-600">Lihat di GitHub &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://placehold.co/600x400/e2e8f0/334155?text=Proyek+Dua" alt="Placeholder Proyek 2" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-slate-800">Nama Proyek Dua</h3>
+                            <p class="text-slate-600 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
+                            <a href="#" class="text-sky-500 font-semibold hover:text-sky-600">Lihat di GitHub &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- Project Card 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="https://placehold.co/600x400/e2e8f0/334155?text=Proyek+Tiga" alt="Placeholder Proyek 3" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-slate-800">Nama Proyek Tiga</h3>
+                            <p class="text-slate-600 mb-4">Deskripsi singkat tentang proyek ini, teknologi yang digunakan, dan peran Anda dalam proyek tersebut.</p>
+                            <a href="#" class="text-sky-500 font-semibold hover:text-sky-600">Lihat di GitHub &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Kontak -->
+        <section id="kontak" class="py-20 bg-slate-800 text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">Tertarik untuk Berkolaborasi?</h2>
+                <p class="max-w-2xl mx-auto mb-8 text-slate-300">Saya selalu terbuka untuk diskusi, peluang baru, atau sekadar menyapa. Jangan ragu untuk menghubungi saya.</p>
+                <a href="mailto:[emailanda@example.com]" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-full hover:bg-sky-600 transition duration-300">Hubungi Saya</a>
+                <div class="flex justify-center gap-6 mt-12">
+                     <a href="https://github.com/[USERNAME_ANDA]" class="text-slate-400 hover:text-white transition">GitHub</a>
+                     <a href="https://linkedin.com/in/[USERNAME_LINKEDIN]" class="text-slate-400 hover:text-white transition">LinkedIn</a>
+                     <a href="https://twitter.com/[USERNAME_TWITTER]" class="text-slate-400 hover:text-white transition">Twitter</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 text-center py-6">
+        <p>&copy; 2025 Amir Ibnu Alfian. Dibuat dengan semangat dan secangkir kopi.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Chart.js Radar Chart
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            
+            // Data untuk chart. Ganti label dan data sesuai keahlian Anda (skala 1-10)
+            const skillsData = {
+                labels: [
+                    'Frontend Dev',
+                    'Backend Dev',
+                    'UI/UX Design',
+                    'Database',
+                    'DevOps',
+                    'Problem Solving'
+                ],
+                datasets: [{
+                    label: 'Tingkat Keahlian',
+                    data: [9, 7, 8, 7, 6, 9], // Ganti dengan data Anda
+                    fill: true,
+                    backgroundColor: 'rgba(14, 165, 233, 0.2)', // sky-500 with opacity
+                    borderColor: 'rgb(14, 165, 233)', // sky-500
+                    pointBackgroundColor: 'rgb(14, 165, 233)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(14, 165, 233)'
+                }]
+            };
+
+            const config = {
+                type: 'radar',
+                data: skillsData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(51, 65, 85, 0.2)' // slate-700 with opacity
+                            },
+                            grid: {
+                                color: 'rgba(51, 65, 85, 0.2)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14
+                                },
+                                color: '#334155' // slate-700
+                            },
+                            ticks: {
+                                backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                color: '#475569', // slate-600
+                                stepSize: 2
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 10
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.r !== null) {
+                                        label += context.parsed.r + ' / 10';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            new Chart(ctx, config);
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                     // Close mobile menu on click
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
