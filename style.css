@@ -79,4 +79,16 @@ button {
 button:hover {
     background-color: #3b82f6; /* Warna latar belakang saat hover */
     transform: scale(1.05); /* Memperbesar tombol saat hover */
+
+}
+
+h1, h2, h3 {
+    transition: color 0.3s ease-in-out; /* biar halus pas ganti mode */
+}
+
+/* Mode gelap (dark) jadi hijau */
+.dark h1,
+.dark h2,
+.dark h3 {
+    color: #22c55e; /* Tailwind green-500 */
 }
