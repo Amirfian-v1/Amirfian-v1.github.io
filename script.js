@@ -149,17 +149,4 @@ window.addEventListener('scroll', () => {
 });
 
 
-document.getElementById('social-text-btn').addEventListener('click', function () {
-    const bar = document.getElementById('social-bar');
-    if (bar.classList.contains('hidden')) {
-        bar.classList.remove('hidden');
-        setTimeout(() => {
-            bar.classList.remove('translate-y-4', 'opacity-0');
-        }, 10);
-    } else {
-        bar.classList.add('translate-y-4', 'opacity-0');
-        setTimeout(() => {
-            bar.classList.add('hidden');
-        }, 500);
-    }
-});
+
