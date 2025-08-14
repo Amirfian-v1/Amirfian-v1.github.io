@@ -133,3 +133,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+let lastScrollY = window.scrollY;
+const header = document.getElementById('main-header');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY) {
+        // Scroll ke bawah → sembunyikan header
+        header.classList.add('-translate-y-full');
+    } else {
+        // Scroll ke atas → tampilkan header
+        header.classList.remove('-translate-y-full');
+    }
+    lastScrollY = window.scrollY;
+});
