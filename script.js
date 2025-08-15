@@ -148,5 +148,35 @@ window.addEventListener('scroll', () => {
     lastScrollY = window.scrollY;
 });
 
+// Ambil elemen tombol berdasarkan ID-nya
+const scrollToTopBtn = document.getElementById("scroll-to-top");
+
+// Fungsi untuk menampilkan atau menyembunyikan tombol
+const toggleButtonVisibility = () => {
+  // Jika posisi scroll vertikal lebih dari 200 piksel
+  if (window.scrollY > 200) {
+    // Tampilkan tombol dengan mengubah opacity-nya
+    scrollToTopBtn.classList.remove('opacity-0');
+    scrollToTopBtn.classList.add('opacity-100');
+  } else {
+    // Sembunyikan lagi tombolnya
+    scrollToTopBtn.classList.remove('opacity-100');
+    scrollToTopBtn.classList.add('opacity-0');
+  }
+};
+
+// Fungsi untuk scroll ke atas halaman
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth" // Efek scroll yang halus
+  });
+};
+
+// Tambahkan event listener saat window di-scroll
+window.addEventListener("scroll", toggleButtonVisibility);
+
+// Tambahkan event listener saat tombol di-klik
+scrollToTopBtn.addEventListener("click", scrollToTop);
 
 
