@@ -4,6 +4,11 @@ body {
     background-color: #f9fafb; /* Warna latar belakang terang */
     color: #374151; /* Warna teks terang */
     transition: background-color 0.5s, color 0.5s; /* Transisi halus untuk perubahan warna */
+    background-color: light-dark(#fff, #444);
+}
+
+:root {
+    color-scheme: light dark;
 }
 
 /* Tema Gelap */
