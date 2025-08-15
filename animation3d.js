@@ -9,74 +9,102 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(container.clientWidth, container.clientHeight);
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
     directionalLight.position.set(5, 10, 7.5);
     scene.add(directionalLight);
 
-    // Create a simple person model
+    // === PERUBAHAN DIMULAI DI SINI ===
+    // Membuat model karakter Roblox-style (blocky)
     const personGroup = new THREE.Group();
-    const head = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), new THREE.MeshLambertMaterial({ color: 0x0ea5e9 }));
+
+    // Material
+    const bodyMaterial = new THREE.MeshLambertMaterial({ color: 0x334155 }); // Warna badan (gelap)
+    const headMaterial = new THREE.MeshLambertMaterial({ color: 0x0ea5e9 }); // Warna kepala & lengan (biru)
+
+    // Kepala (BoxGeometry)
+    const head = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), headMaterial);
     head.position.y = 1.5;
+
+    // Badan (BoxGeometry)
+    const torso = new THREE.Mesh(new THREE.BoxGeometry(1.5, 2, 0.75), bodyMaterial);
     
-    const torso = new THREE.Mesh(new THREE.BoxGeometry(1, 1.5, 0.5), new THREE.MeshLambertMaterial({ color: 0x334155 }));
+    // Tangan Kiri (BoxGeometry)
+    const armLeft = new THREE.Mesh(new THREE.BoxGeometry(0.5, 2, 0.75), headMaterial);
+    armLeft.position.set(-1, 0, 0);
     
-    const armLeft = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.1, 1.2), new THREE.MeshLambertMaterial({ color: 0x0ea5e9 }));
-    armLeft.position.set(-0.7, 0.2, 0);
-    
+    // Tangan Kanan (clone dari tangan kiri)
     const armRight = armLeft.clone();
-    armRight.position.x = 0.7;
+    armRight.position.x = 1;
 
-    const legLeft = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.15, 1.5), new THREE.MeshLambertMaterial({ color: 0x334155 }));
-    legLeft.position.set(-0.3, -1.5, 0);
+    // Kaki Kiri (BoxGeometry)
+    const legLeft = new THREE.Mesh(new THREE.BoxGeometry(0.6, 2, 0.75), bodyMaterial);
+    legLeft.position.set(-0.4, -2, 0);
 
+    // Kaki Kanan (clone dari kaki kiri)
     const legRight = legLeft.clone();
-    legRight.position.x = 0.3;
+    legRight.position.x = 0.4;
 
     personGroup.add(head, torso, armLeft, armRight, legLeft, legRight);
     scene.add(personGroup);
 
-    camera.position.z = 5;
+    // Mundurkan kamera agar karakter terlihat penuh
+    camera.position.z = 8;
+    // === PERUBAHAN SELESAI ===
+
 
     // Mouse interaction variables
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
+    let autoRotate = true;
 
-    container.addEventListener('mousedown', (e) => {
+    const startInteraction = () => {
         isDragging = true;
-    });
-    container.addEventListener('mouseup', (e) => {
+        autoRotate = false;
+    };
+    const endInteraction = () => {
         isDragging = false;
+        // Optional: uncomment below to resume auto-rotation after a delay
+        // setTimeout(() => { autoRotate = true; }, 3000);
+    };
+
+    container.addEventListener('mousedown', startInteraction);
+    container.addEventListener('touchstart', (e) => {
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        startInteraction();
     });
-    container.addEventListener('mousemove', (e) => {
-        const deltaMove = {
-            x: e.offsetX - previousMousePosition.x,
-            y: e.offsetY - previousMousePosition.y
-        };
+
+    container.addEventListener('mouseup', endInteraction);
+    container.addEventListener('touchend', endInteraction);
+    
+    container.addEventListener('mouseleave', endInteraction);
+    
+    const onMouseMove = (clientX, clientY) => {
+        const rect = container.getBoundingClientRect();
+        const mouseX = clientX - rect.left;
+        const mouseY = clientY - rect.top;
 
         if (isDragging) {
-            const deltaRotationQuaternion = new THREE.Quaternion()
-                .setFromEuler(new THREE.Euler(
-                    (deltaMove.y * Math.PI / 180),
-                    (deltaMove.x * Math.PI / 180),
-                    0,
-                    'XYZ'
-                ));
-            personGroup.quaternion.multiplyQuaternions(deltaRotationQuaternion, personGroup.quaternion);
+            const deltaX = mouseX - previousMousePosition.x;
+            const deltaY = mouseY - previousMousePosition.y;
+
+            personGroup.rotation.y += deltaX * 0.01;
+            personGroup.rotation.x += deltaY * 0.01;
         }
+        previousMousePosition = { x: mouseX, y: mouseY };
+    };
 
-        previousMousePosition = { x: e.offsetX, y: e.offsetY };
-    });
-     container.addEventListener('mouseleave', () => {
-        isDragging = false;
-    });
-
+    container.addEventListener('mousemove', (e) => onMouseMove(e.clientX, e.clientY));
+    container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        onMouseMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: false });
 
     // Animation loop
     function animate() {
         requestAnimationFrame(animate);
-        if (!isDragging) {
+        if (autoRotate && !isDragging) {
             personGroup.rotation.y += 0.005;
         }
         renderer.render(scene, camera);
